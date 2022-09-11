@@ -29,5 +29,5 @@ func (p *Provider) ProvideContents() []Content {
 }
 
 func (c Content) String() string {
-	return fmt.Sprintf("[%s] %s (%s)", c.Source, c.Title, c.Url)
+	return fmt.Sprintf("[%s] \n\t%s \n\t(%s)", c.Source, c.Title, c.Url)
 }
