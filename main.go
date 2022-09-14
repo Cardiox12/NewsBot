@@ -1,22 +1,37 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"newsbot/bot"
 	"newsbot/providers"
 	"newsbot/providers/hackernews"
+
+	"github.com/spf13/viper"
 )
 
-// provider -> provide interface to a list of source provider
-// content provider -> provide interface to a news website
-// content -> provide interface to a source provider content
+func getToken() string {
+	viper.SetConfigFile(".env")
+	viper.ReadInConfig()
+
+	// Verify if is string
+	value, ok := viper.Get("TOKEN").(string)
+	if !ok {
+		log.Fatal("Error reading TOKEN in .env file")
+	}
+	return value
+}
 
 func main() {
-	provider := providers.Provider{Max: 5}
-
-	provider.RegisterContentProvider(hackernews.HackernewsProvider)
-
-	contents := provider.ProvideContents()
-	for _, content := range contents {
-		fmt.Println(content)
+	bot := bot.Bot{
+		Token: getToken(),
+		Every: 10,
+		ChannelID: "1018617259431825469",
+		Provider: providers.Provider{ Max: 3 },
 	}
+
+	bot.Init()
+
+	bot.RegisterContentProvider(hackernews.HackernewsProvider)
+	
+	bot.ServeForever()
 }
