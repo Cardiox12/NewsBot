@@ -51,7 +51,6 @@ func (b *Bot) Init() {
 	}
 	b.discordGO = dg
 	b.scheduler = gocron.NewScheduler(time.UTC)
-	// b.discordGO.Identify.Intents = discordgo.IntentsGuildMessages
 }
 
 func (b *Bot) ServeForever() {
