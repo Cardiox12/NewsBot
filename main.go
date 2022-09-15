@@ -4,6 +4,7 @@ import (
 	"log"
 	"newsbot/bot"
 	"newsbot/providers"
+	"newsbot/providers/artisandev"
 	"newsbot/providers/hackernews"
 
 	"github.com/spf13/viper"
@@ -32,6 +33,7 @@ func main() {
 	bot.Init()
 
 	bot.RegisterContentProvider(hackernews.HackernewsProvider)
+	bot.RegisterContentProvider(artisandev.ArtisandevProvider)
 	
 	bot.ServeForever()
 }
