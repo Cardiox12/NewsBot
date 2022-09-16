@@ -43,7 +43,7 @@ func (d *Database) Init() {
 	json.Unmarshal(data, &d.Schema)
 }
 
-func (d *Database) Set(key, value string) {
+func (d *Database) Set(key string, value interface{}) {
 	d.Schema[key] = value
 }
 
