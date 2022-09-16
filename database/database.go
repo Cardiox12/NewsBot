@@ -32,7 +32,9 @@ func NewDatabase(path string) *Database {
 func (d *Database) Init() {
 	f, err := os.Open(d.Path)
 
-	if err != nil {
+	if os.IsNotExist(err) {
+		return
+	} else if err != nil {
 		log.Fatalf("Error opening database file")
 	}
 	defer f.Close()
