@@ -1,6 +1,7 @@
 package providers
 
 import (
+	"crypto/md5"
 	"fmt"
 	"newsbot/database"
 )
@@ -34,4 +35,18 @@ func (p *Provider) ProvideContents() []Content {
 
 func (c Content) String() string {
 	return fmt.Sprintf("[%s] \n\t%s \n\t(%s)", c.Source, c.Title, c.Url)
+}
+
+func (c Content) Hash() string {
+	return fmt.Sprintf("%x", md5.Sum([]byte(c.Title)))
+}
+
+func (c Content) Exists(key string, db *database.Database) bool {
+	val, ok := db.Get(key)
+
+	fmt.Printf("Compare %s and %s\n", val, c.Hash())
+	if !ok {
+		return false
+	}
+	return val == c.Hash()
 }
