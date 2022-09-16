@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"newsbot/database"
 	"newsbot/providers"
 )
 
@@ -32,7 +33,7 @@ func getTopstories(n int) []int {
 	return topstories[:n]
 }
 
-func HackernewsProvider(max int) []providers.Content {
+func HackernewsProvider(max int, _ *database.Database) []providers.Content {
 	ids := getTopstories(max)
 	stories := make([]providers.Content, 0, max)
 	var story providers.Content

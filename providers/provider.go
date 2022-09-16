@@ -1,6 +1,9 @@
 package providers
 
-import "fmt"
+import (
+	"fmt"
+	"newsbot/database"
+)
 
 type Content struct {
 	Title  string `json:"title"`
@@ -8,11 +11,12 @@ type Content struct {
 	Source string `json:"source"`
 }
 
-type ContentProvider = func(max int) []Content
+type ContentProvider = func(max int, d *database.Database) []Content
 
 type Provider struct {
-	Max              int
-	ContentProviders []ContentProvider
+	Max              	int
+	Database			*database.Database
+	ContentProviders	[]ContentProvider
 }
 
 func (p *Provider) RegisterContentProvider(cp ContentProvider) {
@@ -23,7 +27,7 @@ func (p *Provider) ProvideContents() []Content {
 	all := make([]Content, 0)
 
 	for _, contentProvider := range p.ContentProviders {
-		all = append(all, contentProvider(p.Max)...)
+		all = append(all, contentProvider(p.Max, p.Database)...)
 	}
 	return all
 }

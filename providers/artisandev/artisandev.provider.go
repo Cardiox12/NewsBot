@@ -1,6 +1,7 @@
 package artisandev
 
 import (
+	"newsbot/database"
 	"newsbot/providers"
 
 	"github.com/gocolly/colly/v2"
@@ -8,7 +9,7 @@ import (
 
 const artisandev_name = "artisan dev"
 
-func ArtisandevProvider(max int) []providers.Content {
+func ArtisandevProvider(max int, _ *database.Database) []providers.Content {
 	articles := make([]providers.Content, 0)
 	c := colly.NewCollector()
 	n := 0
