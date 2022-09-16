@@ -30,6 +30,7 @@ func (p *Provider) ProvideContents() []Content {
 	for _, contentProvider := range p.ContentProviders {
 		all = append(all, contentProvider(p.Max, p.Database)...)
 	}
+	p.Database.Write()
 	return all
 }
 
@@ -44,7 +45,6 @@ func (c Content) Hash() string {
 func (c Content) Exists(key string, db *database.Database) bool {
 	val, ok := db.Get(key)
 
-	fmt.Printf("Compare %s and %s\n", val, c.Hash())
 	if !ok {
 		return false
 	}
