@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"newsbot/bot"
+	"newsbot/database"
 	"newsbot/providers"
 	"newsbot/providers/artisandev"
 	"newsbot/providers/hackernews"
@@ -22,18 +23,34 @@ func getToken() string {
 	return value
 }
 
-func main() {
+func run() {
+	// Create a new database
+	db := database.NewDatabase("database/db.json")
+	
+	// Init database
+	db.Init()
+	
 	bot := bot.Bot{
 		Token: getToken(),
 		Every: 10,
 		ChannelID: "1018617259431825469",
-		Provider: providers.Provider{ Max: 3 },
+		Provider: providers.Provider{ 
+			Max: 3, 
+			Database: db, 
+		},
 	}
-
+	
+	// Initialize bot
 	bot.Init()
 
+	// Register providers
 	bot.RegisterContentProvider(hackernews.HackernewsProvider)
 	bot.RegisterContentProvider(artisandev.ArtisandevProvider)
-	
+
+	// Run bot loop
 	bot.ServeForever()
+}
+
+func main() {
+	run()
 }
