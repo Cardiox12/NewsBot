@@ -1,7 +1,6 @@
 package artisandev
 
 import (
-	"fmt"
 	"newsbot/database"
 	"newsbot/providers"
 
@@ -23,7 +22,6 @@ func ArtisandevProvider(max int, db *database.Database) []providers.Content {
 	
 			article.Title = e.DOM.Find("a").First().Text()
 			
-			fmt.Println(article.Hash())
 			if n == 0 {
 				if article.Exists(artisandev_name, db) {
 					stop = true
