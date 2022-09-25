@@ -51,6 +51,7 @@ func run() {
 	bot.RegisterContentProvider(devnet.DevnetJetbrainsProvider)
 	bot.RegisterContentProvider(devnet.DevnetPythonProvider)
 	bot.RegisterContentProvider(devnet.DevnetGoProvider)
+	bot.RegisterContentProvider(devnet.DevnetJavaProvider)
 
 	// Run bot loop
 	bot.ServeForever()
