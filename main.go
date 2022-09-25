@@ -6,6 +6,7 @@ import (
 	"newsbot/database"
 	"newsbot/providers"
 	"newsbot/providers/artisandev"
+	"newsbot/providers/devnet"
 	"newsbot/providers/hackernews"
 
 	"github.com/spf13/viper"
@@ -32,10 +33,10 @@ func run() {
 	
 	bot := bot.Bot{
 		Token: getToken(),
-		Every: 10,
+		Every: 60,
 		ChannelID: "1018617259431825469",
 		Provider: providers.Provider{ 
-			Max: 3, 
+			Max: 2, 
 			Database: db, 
 		},
 	}
@@ -46,6 +47,10 @@ func run() {
 	// Register providers
 	bot.RegisterContentProvider(hackernews.HackernewsProvider)
 	bot.RegisterContentProvider(artisandev.ArtisandevProvider)
+	bot.RegisterContentProvider(devnet.DevnetWebProvider)
+	bot.RegisterContentProvider(devnet.DevnetJetbrainsProvider)
+	bot.RegisterContentProvider(devnet.DevnetPythonProvider)
+	bot.RegisterContentProvider(devnet.DevnetGoProvider)
 
 	// Run bot loop
 	bot.ServeForever()
