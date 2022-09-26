@@ -35,7 +35,7 @@ func (p *Provider) ProvideContents() []Content {
 }
 
 func (c Content) String() string {
-	return fmt.Sprintf("[%s] \n\t%s \n\t(%s)", c.Source, c.Title, c.Url)
+	return fmt.Sprintf("[%s] - %s\n%s\n", c.Source, c.Title, c.Url)
 }
 
 func (c Content) Hash() string {
