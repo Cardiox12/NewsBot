@@ -15,7 +15,7 @@ import (
 
 type Bot struct {
 	Token		string
-	Every		int
+	Every		string
 	ChannelID	string
 	Provider	providers.Provider
 
@@ -28,7 +28,7 @@ func (b *Bot) getInitName() string {
 }
 
 func (b *Bot) scheduledEvent() {
-	b.scheduler.Every(b.Every).Second().Do(func(){
+	b.scheduler.Cron(b.Every).Do(func(){
 		b.serveContents()
 	})
 	b.scheduler.StartBlocking()

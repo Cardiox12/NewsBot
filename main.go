@@ -33,7 +33,7 @@ func run() {
 	
 	bot := bot.Bot{
 		Token: getToken(),
-		Every: 60,
+		Every: "*/1 * * * *",
 		ChannelID: "1018617259431825469",
 		Provider: providers.Provider{ 
 			Max: 2, 
