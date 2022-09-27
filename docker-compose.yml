@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  newsbot:
+    container_name: newsbot
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: unless-stopped
