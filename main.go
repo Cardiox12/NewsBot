@@ -1,39 +1,26 @@
 package main
 
 import (
-	"log"
 	"newsbot/bot"
+	"newsbot/config"
 	"newsbot/database"
 	"newsbot/providers"
 	"newsbot/providers/artisandev"
 	"newsbot/providers/devnet"
 	"newsbot/providers/hackernews"
-
-	"github.com/spf13/viper"
 )
-
-func getToken() string {
-	viper.SetConfigFile(".env")
-	viper.ReadInConfig()
-
-	// Verify if is string
-	value, ok := viper.Get("TOKEN").(string)
-	if !ok {
-		log.Fatal("Error reading TOKEN in .env file")
-	}
-	return value
-}
 
 func run() {
 	// Create a new database
+	config.InitConfig(".env")
 	db := database.NewDatabase("database/db.json")
 	
 	// Init database
 	db.Init()
 	
 	bot := bot.Bot{
-		Token: getToken(),
-		Every: "*/1 * * * *",
+		Token: config.GetToken(),
+		Every: config.GetCronString(),
 		ChannelID: "1018617259431825469",
 		Provider: providers.Provider{ 
 			Max: 2, 
