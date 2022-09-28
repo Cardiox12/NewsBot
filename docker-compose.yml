@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 
 services:
   newsbot:
@@ -7,3 +7,5 @@ services:
       dockerfile: Dockerfile
       context: .
     restart: unless-stopped
+    volumes:
+      - ./database:/usr/src/app/database
