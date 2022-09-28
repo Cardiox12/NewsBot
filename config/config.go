@@ -37,7 +37,7 @@ func GetCronString() string {
 }
 
 func GetChannelID() string {
-	value, ok := os.LookupEnv("CHANNEL_ID")
+	value, ok := getEnvVar("CHANNEL_ID")
 	if !ok {
 		log.Fatal(getErrorString("CHANNEL_ID"))
 	}
