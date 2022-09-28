@@ -31,3 +31,11 @@ func GetCronString() string {
 	}
 	return value
 }
+
+func GetChannelID() string {
+	value, ok := viper.Get("CHANNEL_ID").(string)
+	if !ok {
+		log.Fatal(getErrorString("CHANNEL_ID"))
+	}
+	return value
+}

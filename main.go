@@ -21,7 +21,7 @@ func run() {
 	bot := bot.Bot{
 		Token: config.GetToken(),
 		Every: config.GetCronString(),
-		ChannelID: "1018617259431825469",
+		ChannelID: config.GetChannelID(),
 		Provider: providers.Provider{ 
 			Max: 2, 
 			Database: db, 
