@@ -9,3 +9,5 @@ services:
     restart: unless-stopped
     volumes:
       - ./database:/usr/src/app/database
+    env_file:
+      - .env

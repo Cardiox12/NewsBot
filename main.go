@@ -12,7 +12,6 @@ import (
 
 func run() {
 	// Create a new database
-	config.InitConfig(".env")
 	db := database.NewDatabase("database/db.json")
 	
 	// Init database

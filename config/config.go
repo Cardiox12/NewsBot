@@ -3,21 +3,15 @@ package config
 import (
 	"fmt"
 	"log"
-
-	"github.com/spf13/viper"
+	"os"
 )
 
 func getErrorString(msg string) string {
-	return fmt.Sprintf("Error reading %s in .env file", msg)
-}
-
-func InitConfig(path string) {
-	viper.SetConfigFile(path)
-	viper.ReadInConfig()
+	return fmt.Sprintf("Error reading %s env variable", msg)
 }
 
 func GetToken() string {
-	value, ok := viper.Get("TOKEN").(string)
+	value, ok := os.LookupEnv("TOKEN")
 	if !ok {
 		log.Fatal(getErrorString("TOKEN"))
 	}
@@ -25,7 +19,7 @@ func GetToken() string {
 }
 
 func GetCronString() string {
-	value, ok := viper.Get("EVERY").(string)
+	value, ok := os.LookupEnv("EVERY")
 	if !ok {
 		log.Fatal(getErrorString("EVERY (cron string)"))
 	}
@@ -33,7 +27,7 @@ func GetCronString() string {
 }
 
 func GetChannelID() string {
-	value, ok := viper.Get("CHANNEL_ID").(string)
+	value, ok := os.LookupEnv("CHANNEL_ID")
 	if !ok {
 		log.Fatal(getErrorString("CHANNEL_ID"))
 	}
