@@ -4,14 +4,24 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func getErrorString(msg string) string {
 	return fmt.Sprintf("Error reading %s env variable", msg)
 }
 
+func getEnvVar(key string) (string, bool) {
+	value, ok := os.LookupEnv(key)
+
+	if !ok {
+		return "", ok
+	}
+	return strings.Trim(value, "\""), true
+}
+
 func GetToken() string {
-	value, ok := os.LookupEnv("TOKEN")
+	value, ok := getEnvVar("TOKEN")
 	if !ok {
 		log.Fatal(getErrorString("TOKEN"))
 	}
@@ -19,7 +29,7 @@ func GetToken() string {
 }
 
 func GetCronString() string {
-	value, ok := os.LookupEnv("EVERY")
+	value, ok := getEnvVar("EVERY")
 	if !ok {
 		log.Fatal(getErrorString("EVERY (cron string)"))
 	}
