@@ -3,8 +3,12 @@ package providers
 import (
 	"crypto/md5"
 	"fmt"
+	"log"
 	"newsbot/database"
+	"os"
 )
+
+var Notice *log.Logger = log.New(os.Stdout, "[NOTICE] ", log.Default().Flags())
 
 type Content struct {
 	Title  string `json:"title"`
@@ -34,19 +38,23 @@ func (p *Provider) ProvideContents() []Content {
 	return all
 }
 
-func (c Content) String() string {
+func (c *Content) String() string {
 	return fmt.Sprintf("[%s] - %s\n%s\n", c.Source, c.Title, c.Url)
 }
 
-func (c Content) Hash() string {
+func (c *Content) Hash() string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(c.Title)))
 }
 
-func (c Content) Exists(key string, db *database.Database) bool {
+func (c *Content) Exists(key string, db *database.Database) bool {
 	val, ok := db.Get(key)
 
 	if !ok {
 		return false
 	}
 	return val == c.Hash()
+}
+
+func (c *Content) LogSent() {
+	Notice.Printf("SEND [%s] %s \n", c.Source, c.Title)
 }

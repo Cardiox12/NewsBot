@@ -38,7 +38,7 @@ func (b *Bot) serveContents() {
 	contents := b.Provider.ProvideContents()
 
 	for _, content := range contents {
-		fmt.Println("Sending...")
+		content.LogSent()
 		b.discordGO.ChannelMessageSend(b.ChannelID, content.String())
 	}
 }
