@@ -39,7 +39,13 @@ func (b *Bot) serveContents() {
 
 	for _, content := range contents {
 		content.LogSent()
-		b.discordGO.ChannelMessageSend(b.ChannelID, content.String())
+		b.discordGO.ChannelMessageSendComplex(b.ChannelID, &discordgo.MessageSend{
+			Embed: &discordgo.MessageEmbed{
+				URL: content.Url,
+				Title: content.Title,
+				Type: discordgo.EmbedTypeArticle,
+			},
+		})
 	}
 }
 
