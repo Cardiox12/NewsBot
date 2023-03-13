@@ -22,7 +22,7 @@ func run() {
 		Every: config.GetCronString(),
 		ChannelID: config.GetChannelID(),
 		Provider: providers.Provider{ 
-			Max: 2, 
+			Max: 4, 
 			Database: db, 
 		},
 	}
